@@ -1,0 +1,15 @@
+---
+- name: Preparar mi VM
+  hosts: webservers
+  remote_user: "{{ vm_user }}"
+  become: true
+  vars_files:
+    - vars/00_vars.yaml
+    - vars/001_secrets.yaml
+  tasks:
+    - name: Upgrade VM
+      include_tasks: tasks/00_PrepWebApp.yaml
+    - name: Apache Install
+      include_tasks: tasks/00_PrepApache.yaml
+    - name: DO SSL
+      include_tasks: tasks/00_PrepSSL.yaml

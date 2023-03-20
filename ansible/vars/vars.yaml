@@ -1,0 +1,32 @@
+---
+vm_user: "UserAzure"
+web_user: "UserAzure"
+paquetes_requeridos_vm:
+  - 'firewalld'
+  - 'podman'
+  - 'openssl'
+  - 'python3-apt'
+  - 'python3-passlib'
+  - 'apache2'
+
+webcred_user: "admin"
+webcred_passwd: "1234"
+
+ssl_key: "myServer.key"
+ssl_cert: "myServer.crt"
+ssl_csr: "myServer.csr"
+ssl_country_name: "ES"
+ssl_org_name: "UNIR"
+ssl_org_unit: "DevOpsCloud"
+ssl_common_name: "myServer"
+ssl_email_address: "deuvege7@gmail.com"
+
+webapp_dir: "/home/{{ web_user }}/webapp"
+dest_ssl_key_dir: "/etc/ssl/certs"
+dest_ssl_private_dir: "/etc/ssl/private"
+dest_sites_available: "/etc/apache2/sites-available"
+dest_webapp_dir: "/var/www/webapp"
+dest_site_available: "default-ssl.conf"
+
+registry_acr: "mycontainerregistrydvg.azurecr.io"
+webappacr: "{{ registry_acr }}/webapp"

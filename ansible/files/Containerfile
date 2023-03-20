@@ -1,0 +1,6 @@
+FROM docker.io/ubuntu/apache2:latest
+COPY index.html /var/www/webapp/
+COPY default-ssl.conf /etc/apache2/sites-available/
+COPY .htpasswd /var/www/web/
+COPY server.key /etc/ssl/private/
+COPY server.crt /etc/ssl/certs/

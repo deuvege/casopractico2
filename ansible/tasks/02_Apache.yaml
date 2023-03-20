@@ -1,0 +1,55 @@
+---
+- name: fw port 443
+  become: true
+  firewalld:
+    port: 443/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: fw port 80
+  become: true
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: htpasswd basic auth
+  become: true
+  htpasswd:
+    path: "{{ dest_webapp_dir }}/{{ webcred_passwd }}"
+    name: "{{ webcred_user }}"
+    password: "{{ webcred_pass }}"
+    mode: 0644
+
+- name: Copiar index.html
+  become: true
+  copy:
+    src: "files/index.html"
+    dest: "{{ dest_webapp_dir }}"
+
+- name: Copia  de ficheros apache
+  become: true
+  template:
+    src: "files/default-ssl.conf"
+    dest: "{{ dest_sites_available }}"
+
+- name: Containerfile
+  become: true
+  copy:
+    src: "files/Containerfile"
+    dest: "{{ webapp_dir }}"
+
+- name: Habilitar pagina ssl
+  become: true
+  command: a2ensite default-ssl
+
+- name: Habilitar pagina ssl mod
+  become: true
+  command: a2enmod ssl
+
+- name: Reiniciar apache2
+  service:
+    name: apache2
+    state: restarted

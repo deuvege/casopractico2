@@ -1,0 +1,22 @@
+---
+- name: UPdate server
+  apt:
+    update_cache: true
+  become: true
+  become_user: root
+  become_method: sudo
+
+- name: INstall dependencias
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ paquetes_requeridos_vm }}"
+  become: true
+  become_user: root
+  become_method: sudo
+
+- name: DO Directorys
+  file:
+    path: "{{ webapp_dir }}"
+    state: directory
