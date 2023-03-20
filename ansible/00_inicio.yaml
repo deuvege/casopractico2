@@ -4,12 +4,11 @@
   remote_user: "{{ vm_user }}"
   become: true
   vars_files:
-    - vars/00_vars.yaml
-    - vars/001_secrets.yaml
+    - vars/vars.yaml
   tasks:
     - name: Upgrade VM
-      include_tasks: tasks/00_PrepWebApp.yaml
+      include_tasks: tasks/01_appWeb.yaml
     - name: Apache Install
-      include_tasks: tasks/00_PrepApache.yaml
+      include_tasks: tasks/02_Apache.yaml
     - name: DO SSL
-      include_tasks: tasks/00_PrepSSL.yaml
+      include_tasks: tasks/03_CertificadoSSL
